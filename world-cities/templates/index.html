@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World Cities — Time & Weather</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>🌍 World Cities</h1>
+        <p>Current time &amp; weather in major cities around the world</p>
+    </header>
+    <main>
+        <div class="grid">
+            {% for city in cities %}
+            <div class="card" style="--flag-url: url('https://flagcdn.com/w640/{{ city.country | lower }}.png')">
+                <div class="card-header">
+                    <h2>{{ city.name }}</h2>
+                    <span class="country">{{ city.country }}</span>
+                </div>
+                <div class="time-block">
+                    <span class="time">{{ city.time }}</span>
+                    <span class="date">{{ city.date }}</span>
+                </div>
+                <div class="weather-main">
+                    <img src="https://openweathermap.org/img/wn/{{ city.weather.icon }}@2x.png" alt="{{ city.weather.description }}" class="weather-icon">
+                    <span class="temp">{{ city.weather.temp }}°C</span>
+                </div>
+                <p class="description">{{ city.weather.description }}</p>
+                <div class="stats">
+                    <div class="stat">
+                        <span class="stat-label">Feels like</span>
+                        <span class="stat-value">{{ city.weather.feels_like }}°C</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Humidity</span>
+                        <span class="stat-value">{{ city.weather.humidity }}%</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Wind</span>
+                        <span class="stat-value">{{ city.weather.wind }} m/s</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+    <footer>
+        <p>Data from <a href="https://openweathermap.org" target="_blank">OpenWeatherMap</a></p>
+    </footer>
+</body>
+</html>
